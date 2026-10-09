@@ -211,8 +211,8 @@ const CATS = [
 ];
 const normFam = s => (s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toUpperCase().replace(/\s+/g,' ').trim();
 // Artículos con Familia vacía o genérica en Gescom: se ubican por código y, si aparece uno nuevo, por el prefijo del nombre
-const CAT_COD = {};
-const CAT_PREF = [[/^TREN/,'ro']];
+const CAT_COD = {'19877':'li','50019':'ut','60225':'ro'};
+const CAT_PREF = [[/^TREN/,'ro'],[/TRIPOD/,'ro'],[/^MORT/,'ut'],[/^POETT/,'li']];
 // Primero el código, después el prefijo del artículo (Trenet va a Lavado de ropa aunque Gescom lo tenga en Aero Poett) y por último la Familia
 const catDe = (fam, art, cod) => { if(CAT_COD[cod]) return CAT_COD[cod];
   const a=normFam(art); const pr=CAT_PREF.find(([re])=>re.test(a)); if(pr) return pr[1];
@@ -243,6 +243,8 @@ function procesar(txt, nombre){
   const V={}, arts={}, vu={}, fechas=new Set(), allnet={};
   rows.forEach(r=>{
     const cv=parseInt(r[I.cv],10); if(isNaN(cv)) return;
+    // los exhibidores no son venta de producto: fuera del tablero
+    if(/^EXHIBID/.test(normFam(r[I.art]))||normFam(I.fam>=0? r[I.fam] : '')==='EXHIBIDORES') return;
     const neto=num(r[I.neto]), bruto=num(r[I.bruto]), cant=num(r[I.cant]), ac=String(parseInt(r[I.cod],10));
     fechas.add(r[I.fc]);
     const v = V[cv] || (V[cv]={cod:cv,nom:titulo(r[I.vn]),sup:titulo(r[I.sup]||'Sin supervisor')||'Sin supervisor',neto:0,bruto:0,bultos:0,cli:{},cat:{},cid:{}});
