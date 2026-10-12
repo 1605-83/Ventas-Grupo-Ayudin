@@ -410,7 +410,7 @@ function cell(r,c){
     case 'cod': return `<td class="l cod"><button class="tg" type="button" data-tg="${r.cod}" aria-expanded="${abiertos.has(r.cod)}" aria-label="Ver categorías de ${r.nom}">${abiertos.has(r.cod)?'−':'+'}</button>${r.cod}</td>`;
     case 'nom': return `<td class="l">${r.nom}</td>`;
     case 'base': return `<td>${r.base==null?'<span class="muted">—</span>':fmtN(r.base)}</td>`;
-    case 'obj': return `<td><input type="number" min="0" step="1000" style="width:120px" data-f="obj" data-c="${r.cod}" value="${r.obj??''}" aria-label="Objetivo de ${r.nom}"></td>`;
+    case 'obj': return `<td>${r.obj==null?'<span class="muted">—</span>':fmt$(r.obj)}</td>`;
     case 'cc': return `<td>${fmtN(r.cc)}</td>`;
     case 'nc': return `<td>${r.nc==null?'<span class="muted">—</span>':fmtN(r.nc)}</td>`;
     case 'cob': return `<td>${r.cob==null?'<span class="muted">—</span>':`<span class="chip" style="background:${r.cob>=.2?'#7CFF6B':r.cob>=.1?'#FFE14D':'#FF6B6B'}">${fmtP(r.cob)}</span>`}</td>`;
