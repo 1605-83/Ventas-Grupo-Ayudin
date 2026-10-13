@@ -400,7 +400,7 @@ function catRow(r){
   const tot=lst.reduce((a,[,c])=>a+(c?c[imp]:0),0);
   const max=Math.max(...lst.map(([,c])=>c?c[imp]:0),1);
   const oc=OBJ_CAT[r.cod]||{}, hasO=Object.keys(oc).length>0, ideal=(+$('dT').value||1)/(+$('dH').value||1);
-  const chipA=(f,o)=> o? `<span class="chip" style="background:${chipc(f/o)}">${fmtP(f/o)}</span>` : '<span class="muted">—</span>';
+  const chipA=(f,o)=> o? `<span class="chip" style="background:${chipc((f/o)/ideal)}">${fmtP(f/o)}</span>` : '<span class="muted">—</span>';
   const oc3=(f,o)=> hasO? `<td>${o?fmt$(o):'<span class="muted">—</span>'}</td>` : '';
   const oc2=(f,o)=> hasO? `<td>${chipA(f,o)}</td><td>${o?fmt$(Math.max(o-f,0)):'<span class="muted">—</span>'}</td>` : '';
   const body=lst.map(([t,c,k])=>{const f=c?c[imp]:0, cc=c?c.cc:0, o=(oc[k]||0)*fObj;
@@ -421,8 +421,8 @@ function rows(){
       alc: obj? proy/obj:null, av: obj? fact/obj:null};
   });
 }
-function chipc(a){ return a>=.8?'#7CFF6B':a>=.5?'#FFE14D':'#FF6B6B'; }   // rangos fijos (igual que el Reporte diario): <50% rojo, 50-79% amarillo, 80%+ verde
-function color(a){ return a>=.8?'var(--ok)':a>=.5?'var(--mid)':'var(--low)'; }
+function chipc(a){ return a>=1?'#7CFF6B':a>=.85?'#FFE14D':'#FF6B6B'; }
+function color(a){ return a>=1?'var(--ok)':a>=.85?'var(--mid)':'var(--low)'; }
 function cell(r,c){
   switch(c.k){
     case 'cod': return `<td class="l cod"><button class="tg" type="button" data-tg="${r.cod}" aria-expanded="${abiertos.has(r.cod)}" aria-label="Ver categorías de ${r.nom}">${abiertos.has(r.cod)?'−':'+'}</button>${r.cod}</td>`;
@@ -432,7 +432,7 @@ function cell(r,c){
     case 'cc': return `<td>${fmtN(r.cc)}</td>`;
     case 'nc': return `<td>${r.nc==null?'<span class="muted">—</span>':fmtN(r.nc)}</td>`;
     case 'cob': return `<td>${r.cob==null?'<span class="muted">—</span>':`<span class="chip" style="background:${r.cob>=.2?'#7CFF6B':r.cob>=.1?'#FFE14D':'#FF6B6B'}">${fmtP(r.cob)}</span>`}</td>`;
-    case 'av': return `<td>${r.av==null?'<span class="muted">sin objetivo</span>':`<span class="chip" style="background:${chipc(r.av)}">${fmtP(r.av)}</span>`}</td>`;
+    case 'av': return `<td>${r.av==null?'<span class="muted">sin objetivo</span>':`<span class="chip" style="background:${chipc(r.av/((+$('dT').value||1)/(+$('dH').value||1)))}">${fmtP(r.av)}</span>`}</td>`;
     case 'part': return `<td>${fmtP(r.part)}</td>`;
     case 'fact': return `<td>${fmt$(r.fact)}</td>`;
     case 'proy': return `<td>${fmt$(r.proy)}</td>`;
@@ -470,7 +470,7 @@ function render(){
   const tAlc = T.obj? T.proyObj/T.obj : null, tAv = T.obj? T.factObj/T.obj : null;
   const TF = {
     obj: T.obj?fmt$(T.obj):'—', fact: fmt$(T.fact),
-    av: tAv==null?'—':`<span class="chip" style="background:${chipc(tAv)}">${fmtP(tAv)}</span>`,
+    av: tAv==null?'—':`<span class="chip" style="background:${chipc(tAv/(dT/dH))}">${fmtP(tAv)}</span>`,
     proy: fmt$(T.proy), cc: fmtN(T.cc),
     cob: withBase.length?fmtP(withBase.reduce((a,r)=>a+r.cc,0)/T.base):'—',
     nc: withBase.length?fmtN(T.nc):'—', bul: fmtB(T.bul),
