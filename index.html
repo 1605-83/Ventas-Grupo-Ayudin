@@ -416,8 +416,9 @@ else { const sd=store.dias[DKEY]||{}; $('dT').value = sd.dT || META.dT; $('dH').
 const COLS = [
   {k:'cod',t:'Código',l:true},{k:'nom',t:'Vendedor',l:true},{k:'obj',t:'Objetivo $'},
   {k:'fact',t:'Facturación al día',c:'c-fact'},{k:'av',t:'Alcance %',c:'c-proy'},{k:'proy',t:'Proyectado $',c:'c-pct'},
-  // cajas (pedido de Bruno, 06/11/2026): objetivo en cajas, cajas vendidas (bultos convertidos) y su alcance
-  {k:'objc',t:'Objetivo cajas',c:'c-bul'},{k:'bul',t:'Cajas vendidas',c:'c-bul'},{k:'avc',t:'Alcance cajas',c:'c-bul'},
+  // cajas (pedido de Bruno, 06/11/2026): objetivo en cajas y cajas vendidas (bultos convertidos);
+  // 13/11/2026: se saca el alcance en cajas; el % de cobertura queda al final
+  {k:'objc',t:'Objetivo cajas',c:'c-bul'},{k:'bul',t:'Cajas vendidas',c:'c-bul'},
   {k:'cc',t:'Clientes con compra',c:'c-cli'},{k:'base',t:'Base de clientes',c:'c-cli'},{k:'nc',t:'Clientes sin compra',c:'c-cli'},{k:'cob',t:'Cobertura',c:'c-cob'}
 ];
 let sortK='fact', sortD=-1;
