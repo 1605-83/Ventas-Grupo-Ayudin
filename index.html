@@ -419,7 +419,8 @@ const COLS = [
   // cajas (pedido de Bruno, 06/11/2026): objetivo en cajas y cajas vendidas (bultos convertidos);
   // 13/11/2026: se saca el alcance en cajas; el % de cobertura queda al final
   {k:'objc',t:'Objetivo cajas',c:'c-bul'},{k:'bul',t:'Cajas vendidas',c:'c-bul'},
-  {k:'cc',t:'Clientes con compra',c:'c-cli'},{k:'base',t:'Base de clientes',c:'c-cli'},{k:'nc',t:'Clientes sin compra',c:'c-cli'},{k:'cob',t:'Cobertura',c:'c-cob'}
+  // CCC y NC (13/11/2026): titulos cortos para que la tabla entre en la pantalla
+  {k:'cc',t:'CCC',c:'c-cli'},{k:'base',t:'Base',c:'c-cli'},{k:'nc',t:'NC',c:'c-cli'},{k:'cob',t:'Cobertura',c:'c-cob'}
 ];
 let sortK='fact', sortD=-1;
 const abiertos = new Set(), abiertosNC = new Set();
